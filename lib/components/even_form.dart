@@ -1,9 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:calendar/components/index.dart';
 import 'package:calendar/core/dialogs/index.dart';
 import 'package:calendar/core/messages/index.dart';
 import 'package:calendar/core/models/event.dart';
 import 'package:calendar/core/services/event_service.dart';
-import 'package:flutter/material.dart';
 
 class EvenForm {
   // Function to show the form dialog for adding/editing a user
@@ -53,21 +53,14 @@ class EvenForm {
               );
               return;
             } else {
-              final event = Event(
-                title: title.text,
-                date: selectedDate,
-                description: description.text,
-                id: '',
+              await EventService().store(
+                Event(
+                  title: title.text,
+                  date: selectedDate,
+                  description: description.text,
+                  id: '',
+                ),
               );
-              await EventService().store(event);
-
-              // Schedule the notification
-              // NotificationService.scheduleNotification(
-              //   id: event.title.hashCode,
-              //   title: event.title,
-              //   body: event.description ?? '',
-              //   scheduledDate: event.date,
-              // );
 
               title.clear();
               description.clear();

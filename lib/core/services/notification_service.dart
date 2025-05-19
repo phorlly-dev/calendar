@@ -83,7 +83,7 @@ class NotificationService {
   }
 }
 
-class NotiSeervice {
+class NotisService {
   final notisPlugin = FlutterLocalNotificationsPlugin();
 
   bool isInitialized = false;
@@ -91,7 +91,7 @@ class NotiSeervice {
   bool get isInited => isInitialized;
 
   //Init
-  Future<void> initNoti() async {
+  Future<void> init() async {
     if (isInitialized) return; //prevent re-init
 
     //init timezone handling
@@ -138,7 +138,7 @@ class NotiSeervice {
   }
 
   //show an immadiate noti
-  Future<void> showNoti({
+  Future<void> show({
     int id = 0,
     String? title,
     String? body,
@@ -153,7 +153,7 @@ class NotiSeervice {
     - minute (0-59)
    */
 
-  Future<void> scheduleNoti({
+  Future<void> schedule({
     int id = 0,
     required String title,
     required String body,
@@ -187,7 +187,7 @@ class NotiSeervice {
   }
 
   // Cancel a notification
-  Future<void> cancelAllNoti() async {
+  Future<void> cancelAll() async {
     await notisPlugin.cancelAll();
   }
 }

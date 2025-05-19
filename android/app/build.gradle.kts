@@ -56,6 +56,9 @@ dependencies {
 
 //   implementation("androidx.core:core:1.12.0") // ensure this is updated
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+
+  //onesignal
+  implementation("com.onesignal:OneSignal:[5.1.6, 5.1.99]")
 }
 
 flutter {

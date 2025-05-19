@@ -18,7 +18,7 @@ class MeetingService extends Service {
   // Fetch all meetings from Firestore
   Future<List<Meeting>> index() async {
     final snapshot = await readAll<Meeting>(
-      collectionName: 'meetings',
+      collection: 'meetings',
       fromMap: (data, docId) => Meeting.fromMap(data, docId),
     );
 
@@ -29,7 +29,7 @@ class MeetingService extends Service {
   Future<void> store(Meeting object) async {
     await create<Meeting>(
       model: object,
-      collectionName: 'meetings',
+      collection: 'meetings',
       toMap: (value) => value.toMap(),
     );
 
@@ -47,7 +47,7 @@ class MeetingService extends Service {
   Future<void> update(Meeting object) async {
     // Update the data in Firestore
     await modify(
-      collectionName: 'meetings',
+      collection: 'meetings',
       docId: object.id,
       toMap: object.toMap(),
     );
@@ -67,7 +67,7 @@ class MeetingService extends Service {
 
   // Delete a meeting by its ID
   Future<void> remove(String id) async {
-    await delete(collectionName: 'meetings', docId: id);
+    await delete(collection: 'meetings', docId: id);
 
     // Cancel notification when a meeting is deleted
     await notification.cancelNotification(id);
@@ -76,7 +76,7 @@ class MeetingService extends Service {
   // Stream builder for reusable widget
   stream(BuildContext context) {
     return streamBuilder<Meeting>(
-      collectionName: 'meetings',
+      collection: 'meetings',
       fromMap: (data, docId) => Meeting.fromMap(data, docId),
       builder: (context, data) {
         return SfCalendar(

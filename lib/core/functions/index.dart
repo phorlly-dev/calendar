@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class Funcs {
   static final formKey = GlobalKey<FormState>();
@@ -18,5 +20,17 @@ class Funcs {
 
   static String numToStr(int key) {
     return key.toString().padLeft(2, '0');
+  }
+
+  Future<String?> getPlayerId() async {
+    final status = await OneSignal.User.getOnesignalId();
+
+    return status;
+  }
+
+  tz.TZDateTime convertToLocalTimezone(DateTime eventDateTime) {
+    final userTimezone = tz.local;
+
+    return tz.TZDateTime.from(eventDateTime, userTimezone);
   }
 }

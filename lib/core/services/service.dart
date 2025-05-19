@@ -7,10 +7,10 @@ class Service {
   /// Create (Add) a new document with auto ID
   Future<String> create<T>({
     required T model,
-    required String collectionName,
+    required String collection,
     required Map<String, dynamic> Function(T model) toMap,
   }) async {
-    final docRef = firestore.collection(collectionName).doc();
+    final docRef = firestore.collection(collection).doc();
     final data = toMap(model);
 
     data['id'] = docRef.id;
@@ -21,48 +21,48 @@ class Service {
 
   /// Read all documents from a collection
   Future<List<T>> readAll<T>({
-    required String collectionName,
+    required String collection,
     required T Function(Map<String, dynamic> data, String docId) fromMap,
   }) async {
-    final snapshot = await firestore.collection(collectionName).get();
+    final snapshot = await firestore.collection(collection).get();
 
     return snapshot.docs.map((doc) => fromMap(doc.data(), doc.id)).toList();
   }
 
   /// Stream documents in real-time
   Stream<List<T>> streamAll<T>({
-    required String collectionName,
+    required String collection,
     required T Function(Map<String, dynamic> data, String docId) fromMap,
   }) {
-    return firestore.collection(collectionName).snapshots().map((snapshot) {
+    return firestore.collection(collection).snapshots().map((snapshot) {
       return snapshot.docs.map((doc) => fromMap(doc.data(), doc.id)).toList();
     });
   }
 
   /// Update an existing document by ID
   Future<void> modify({
-    required String collectionName,
+    required String collection,
     required String docId,
     required Map<String, dynamic> toMap,
   }) async {
-    await firestore.collection(collectionName).doc(docId).update(toMap);
+    await firestore.collection(collection).doc(docId).update(toMap);
   }
 
   /// Delete a document by ID
   Future<void> delete({
-    required String collectionName,
+    required String collection,
     required String docId,
   }) async {
-    await firestore.collection(collectionName).doc(docId).delete();
+    await firestore.collection(collection).doc(docId).delete();
   }
 
   /// Get a single document by ID
   Future<T?> readOne<T>({
-    required String collectionName,
+    required String collection,
     required String docId,
     required T Function(Map<String, dynamic> data, String docId) fromMap,
   }) async {
-    final doc = await firestore.collection(collectionName).doc(docId).get();
+    final doc = await firestore.collection(collection).doc(docId).get();
 
     if (doc.exists) {
       return fromMap(doc.data()!, doc.id);
@@ -73,12 +73,12 @@ class Service {
 
   //Stream builder for reuseable widget
   StreamBuilder<List<T>> streamBuilder<T>({
-    required String collectionName,
+    required String collection,
     required T Function(Map<String, dynamic> data, String docId) fromMap,
     required Widget Function(BuildContext context, List<T> data) builder,
   }) {
     return StreamBuilder<List<T>>(
-      stream: streamAll(collectionName: collectionName, fromMap: fromMap),
+      stream: streamAll(collection: collection, fromMap: fromMap),
       builder: (context, snapshot) {
         // log('snapshot: ${snapshot.data}');
         if (snapshot.connectionState == ConnectionState.waiting) {
