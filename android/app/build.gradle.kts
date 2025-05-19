@@ -18,7 +18,7 @@ plugins {
 }
 
 android {
-    namespace = "com.kt78.calendar"
+    namespace = "com.kt78.calendar2025"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -36,7 +36,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.kt78.calendar"
+        applicationId = "com.kt78.calendar2025"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
